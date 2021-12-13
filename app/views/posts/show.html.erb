@@ -1,0 +1,27 @@
+<div class="d-flex flex-column align-items-center mt-3">
+  <div class="row post box col-xl-10 col-lg-11 col-xs-12">
+    <div class="col-lg-8 col-md-7 px-0 d-flex post-show-img">
+      <div class="align-self-center">
+        <%= render "photos", {post: @post} %>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-5 mt-sm-4 mt-md-0">
+      <div class="row px-3 d-flex align-items-center">
+        <%= link_to user_path(@post.user), class: "no-text-decoration" do %>
+          <%= image_tag avatar_url(@post.user), class: "post-author-icon" %>
+        <% end %>
+        <%= link_to user_path(@post.user), class: "normal-color no-text-decoration d-flex align-self-center",
+          title: @post.user.name do %>
+          <strong><%= @post.user.name %></strong>
+        <% end %>
+        <% if @post.is_belongs_to? current_user %>
+          <%= link_to post_path(@post), method: :delete, class: "ml-auto delete-post-icon mx-0 my-auto" do %>
+            <i class="far fa-trash-alt" aria-hidden="true"></i>
+          <% end %>
+        <% end %>
+      </div>
+        <%= render 'comment_form', post: @post %>
+      </div>
+    </div>
+  </div>
+</div>

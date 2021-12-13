@@ -1,0 +1,60 @@
+<div class="row justify-content-md-center profile-wrapper">
+  <div class="col-md-4 text-center">
+    <%= image_tag avatar_url(@user), width: '152', height: '152', class: "round-img" %>
+  </div>
+  <div class="col-md-8">
+    <div class="row">
+      <p class="username"><%= @user.name %></p>
+      <% if @user == current_user %>
+        <%= link_to "Edit Profile", edit_user_registration_path, class: "btn btn-outline-dark common-btn edit-profile-btn" %>
+        <button type="button" class="core-sprite setting" data-toggle="modal" data-target="#exampleModal"></button>
+      <% end %>
+
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Settings</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="list-group text-center">
+              <a href="#" class="list-group-item list-group-item-action">Change Password</a>
+              <%= link_to "Log out", destroy_user_session_path, method: :delete,
+                class: "list-group-item list-group-item-action" %>
+              <a href="#" class="list-group-item list-group-item-action" data-dismiss="modal">Cancel</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <p class="email"><%= @user.email %></p>
+    </div>
+  </div>
+
+  <div class="profile-tab">
+    <% if @user == current_user %>
+    <nav>
+      <div class="nav nav-tabs d-flex justify-content-center" id="nav-tab" role="tablist">
+        <a class="nav-item nav-link active" id="nav-posts-tab" data-toggle="tab" href="#nav-posts" role="tab" aria-controls="nav-posts" aria-selected="true">POSTS</a>
+        <a class="nav-item nav-link" id="nav-saved-tab" data-toggle="tab" href="#nav-saved" role="tab" aria-controls="nav-saved" aria-selected="false">SAVED</a>
+      </div>
+    </nav>
+    <% end %>
+    <div class="tab-content pb-3" id="nav-tabContent">
+      <div class="tab-pane fade show active" id="nav-posts" role="tabpanel" aria-labelledby="nav-posts-tab">
+        <div class="row">
+          <%= render "post", {posts: @posts} %>
+        </div>
+      </div>
+      <div class="tab-pane fade" id="nav-saved" role="tabpanel" aria-labelledby="nav-saved-tab">
+        <div class="row">
+          <%= render "post", {posts: @saved} if @user == current_user %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
